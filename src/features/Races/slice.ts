@@ -3,10 +3,12 @@ import { Race } from './types';
 
 interface PinnedRaceState {
   pinnedRaces: Race[];
+  isCardView: boolean;
 }
 
 const initialState: PinnedRaceState = {
   pinnedRaces: [],
+  isCardView: true,
 };
 
 const pinnedRaceSlice = createSlice({
@@ -21,8 +23,11 @@ const pinnedRaceSlice = createSlice({
         (race) => race.round !== action.payload,
       );
     },
+    toggleView: (state) => {
+      state.isCardView = !state.isCardView;
+    },
   },
 });
 
-export const { pinRace, unpinRace } = pinnedRaceSlice.actions;
+export const { pinRace, unpinRace, toggleView } = pinnedRaceSlice.actions;
 export default pinnedRaceSlice.reducer;

@@ -30,6 +30,7 @@ const SeasonsItemsWrapper: React.FC = () => {
     <SeasonsItemsWithPagination
       fetchData={fetchSeasonsWithPagination}
       itemsPerPage={10}
+      queryKey={['seasons']}
     />
   );
 };

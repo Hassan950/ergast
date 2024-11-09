@@ -1,4 +1,5 @@
 import api from '../../api/axios';
+import { PaginationParams } from '../../types/api';
 import { GetRacesResponse } from './types';
 
 export const fetchRacesForSeason = async (

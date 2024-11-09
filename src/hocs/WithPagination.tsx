@@ -8,10 +8,11 @@ import { Box, Pagination, Stack } from '@mui/material';
 interface WithPaginationProps {
   fetchData: (page: number, itemsPerPage: number) => Promise<Response>;
   itemsPerPage: number;
+  queryKey: string[];
 }
 
 const WithPagination = (WrappedComponent: React.FC<any>) => {
-  return ({ fetchData, itemsPerPage = 10 }: WithPaginationProps) => {
+  return ({ fetchData, itemsPerPage = 10, queryKey }: WithPaginationProps) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -26,7 +27,7 @@ const WithPagination = (WrappedComponent: React.FC<any>) => {
     }, [searchParams]);
 
     const { data, isLoading, isError } = useQuery({
-      queryKey: ['data', currentPage],
+      queryKey: [...queryKey, currentPage],
       queryFn: () => fetchData(currentPage, itemsPerPage),
       placeholderData: keepPreviousData,
     });
