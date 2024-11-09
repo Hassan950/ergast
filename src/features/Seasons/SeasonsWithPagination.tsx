@@ -5,28 +5,27 @@ import SeasonList from './SeasonList';
 import SeasonCards from './SeasonCards';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
+import { GetSeasonsResponse } from './types';
 
 const fetchSeasonsWithPagination = async (page: number, limit: number) => {
   const response = await fetchSeasons({ limit, offset: (page - 1) * limit });
   return response.data;
 };
 
-const SeasonsItemsWithPagination = WithPagination(SeasonList);
-const SeasonsCardsWithPagination = WithPagination(SeasonCards);
-
-const SeasonsItemsWrapper: React.FC = () => {
+const SeasonsView: React.FC<{ data: GetSeasonsResponse }> = (props) => {
   const isCardView = useSelector(
     (state: RootState) => state.seasons.isCardView,
   );
   if (isCardView) {
-    return (
-      <SeasonsCardsWithPagination
-        fetchData={fetchSeasonsWithPagination}
-        itemsPerPage={10}
-      />
-    );
+    return <SeasonCards {...props} />;
   }
 
+  return <SeasonList {...props} />;
+};
+
+const SeasonsItemsWithPagination = WithPagination(SeasonsView);
+
+const SeasonsItemsWrapper: React.FC = () => {
   return (
     <SeasonsItemsWithPagination
       fetchData={fetchSeasonsWithPagination}
