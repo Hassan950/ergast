@@ -1,27 +1,8 @@
 import React from 'react';
 import { GetSeasonsResponse, Season } from './types';
 import { useNavigate } from 'react-router-dom';
-import {
-  Grid2 as Grid,
-  Button,
-  ListItem,
-  ListItemText,
-  Stack,
-  styled,
-  Paper,
-  Box,
-} from '@mui/material';
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: '#fff',
-  ...theme.typography.h4,
-  padding: theme.spacing(1),
-  textAlign: 'start',
-  color: theme.palette.text.primary,
-  ...theme.applyStyles('dark', {
-    backgroundColor: '#1A2027',
-  }),
-}));
+import { Grid2 as Grid, Button, Stack, Box } from '@mui/material';
+import Item from '../../shared/Item';
 
 const SeasonItem: React.FC<Season> = ({ season }) => {
   const navigate = useNavigate();

@@ -1,21 +1,18 @@
 import React from 'react';
 import { IconButton } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import { toggleView } from './slice';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import GridViewIcon from '@mui/icons-material/GridView';
 
-const ToggleView: React.FC = () => {
-  const dispatch = useDispatch();
-  const isCardView = useSelector(
-    (state: RootState) => state.seasons.isCardView,
-  );
+type ToggleViewProps = {
+  onToggle: () => void;
+  isCardView: boolean;
+};
 
+const ToggleView: React.FC<ToggleViewProps> = ({ onToggle, isCardView }) => {
   return (
     <div>
       <IconButton
-        onClick={() => dispatch(toggleView())}
+        onClick={onToggle}
         color={isCardView ? 'default' : 'primary'}
         aria-label="List View"
         disabled={!isCardView}
@@ -28,7 +25,7 @@ const ToggleView: React.FC = () => {
         <FormatListBulletedIcon />
       </IconButton>
       <IconButton
-        onClick={() => dispatch(toggleView())}
+        onClick={onToggle}
         color={isCardView ? 'primary' : 'default'}
         aria-label="Grid View"
         disabled={isCardView}
