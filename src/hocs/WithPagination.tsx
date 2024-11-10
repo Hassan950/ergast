@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Response } from '../types/api';
-import { CircularProgress, Pagination, Stack } from '@mui/material';
+import { Pagination, Stack } from '@mui/material';
 import PagingContainer from '../shared/PagingContainer';
+import FallbackHandler from '../shared/FallbackHandler';
 
 interface WithPaginationProps {
   fetchData: (page: number, itemsPerPage: number) => Promise<Response>;
@@ -46,34 +47,20 @@ const WithPagination = (WrappedComponent: React.FC<any>) => {
       setCurrentPage(page);
     };
 
-    if (isLoading) {
-      return (
-        <PagingContainer flex>
-          <CircularProgress />
-        </PagingContainer>
-      );
-    }
-
-    if (isError) {
-      return <PagingContainer flex>Error fetching data!</PagingContainer>;
-    }
-
-    if (!data || data.MRData.total === '0') {
-      return <PagingContainer flex>No data found!</PagingContainer>;
-    }
-
     return (
-      <Stack alignItems={'center'} justifyContent={'center'}>
-        <PagingContainer>
-          <WrappedComponent data={data} />
-        </PagingContainer>
-        <Pagination
-          count={pageCount}
-          shape="rounded"
-          page={currentPage}
-          onChange={(_e, page) => goToPage(page)}
-        />
-      </Stack>
+      <FallbackHandler isLoading={isLoading} isError={isError} data={data}>
+        <Stack alignItems={'center'} justifyContent={'center'}>
+          <PagingContainer>
+            <WrappedComponent data={data} />
+          </PagingContainer>
+          <Pagination
+            count={pageCount}
+            shape="rounded"
+            page={currentPage}
+            onChange={(_e, page) => goToPage(page)}
+          />
+        </Stack>
+      </FallbackHandler>
     );
   };
 };

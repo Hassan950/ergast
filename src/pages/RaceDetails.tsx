@@ -1,19 +1,12 @@
+import { Container } from '@mui/material';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import RaceDetailsPage from '../features/RaceDetails/RaceDetailsPage';
 
 const RaceDetails: React.FC = () => {
-  const { seasonId, round } = useParams<{
-    seasonId: string;
-    round: string;
-  }>();
-
   return (
-    <div>
-      <h1>
-        Details for Race {round} in Season {seasonId}
-      </h1>
-      <p>Driver performance and details would go here.</p>
-    </div>
+    <Container>
+      <RaceDetailsPage />
+    </Container>
   );
 };
 
