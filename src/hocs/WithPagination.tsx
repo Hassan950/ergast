@@ -1,9 +1,9 @@
-// src/hocs/WithPagination.tsx
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Response } from '../types/api';
-import { Box, Pagination, Stack } from '@mui/material';
+import { CircularProgress, Pagination, Stack } from '@mui/material';
+import PagingContainer from '../shared/PagingContainer';
 
 interface WithPaginationProps {
   fetchData: (page: number, itemsPerPage: number) => Promise<Response>;
@@ -47,22 +47,26 @@ const WithPagination = (WrappedComponent: React.FC<any>) => {
     };
 
     if (isLoading) {
-      return <div>Loading...</div>;
+      return (
+        <PagingContainer flex>
+          <CircularProgress />
+        </PagingContainer>
+      );
     }
 
     if (isError) {
-      return <div>Error fetching data!</div>;
+      return <PagingContainer flex>Error fetching data!</PagingContainer>;
     }
 
-    if (!data) {
-      return <div>No data found!</div>;
+    if (!data || data.MRData.total === '0') {
+      return <PagingContainer flex>No data found!</PagingContainer>;
     }
 
     return (
       <Stack alignItems={'center'} justifyContent={'center'}>
-        <Box height={'80vh'} overflow={'auto'} width={'100%'} padding={2}>
+        <PagingContainer>
           <WrappedComponent data={data} />
-        </Box>
+        </PagingContainer>
         <Pagination
           count={pageCount}
           shape="rounded"

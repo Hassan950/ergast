@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Race } from './types';
 
+// pinned races is object where the key is the season and the value is an array of races
 interface PinnedRaceState {
-  pinnedRaces: Race[];
+  pinnedRaces: Record<string, Race[]>;
   isCardView: boolean;
 }
 
 const initialState: PinnedRaceState = {
-  pinnedRaces: [],
+  pinnedRaces: {},
   isCardView: true,
 };
 
@@ -16,12 +17,14 @@ const pinnedRaceSlice = createSlice({
   initialState,
   reducers: {
     pinRace: (state, action: PayloadAction<Race>) => {
-      state.pinnedRaces.push(action.payload);
+      state.pinnedRaces[action.payload.season] =
+        state.pinnedRaces[action.payload.season] || [];
+      state.pinnedRaces[action.payload.season].push(action.payload);
     },
-    unpinRace: (state, action: PayloadAction<string>) => {
-      state.pinnedRaces = state.pinnedRaces.filter(
-        (race) => race.round !== action.payload,
-      );
+    unpinRace: (state, action: PayloadAction<Race>) => {
+      state.pinnedRaces[action.payload.season] = state.pinnedRaces[
+        action.payload.season
+      ].filter((race) => race.round !== action.payload.round);
     },
     toggleView: (state) => {
       state.isCardView = !state.isCardView;
