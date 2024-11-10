@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import React from 'react';
-import RaceDetailsPage from '../features/RaceDetails/RaceDetailsPage';
+import RaceDetailsPage from '../features/RaceDetails/RaceDetailsPageWrapper';
 
 const RaceDetails: React.FC = () => {
   return (

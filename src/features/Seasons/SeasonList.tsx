@@ -18,7 +18,7 @@ const SeasonItem: React.FC<Season> = ({ season }) => {
   );
 };
 
-const SeasonItems: React.FC<{ data: GetSeasonsResponse }> = ({ data }) => {
+const SeasonList: React.FC<{ data: GetSeasonsResponse }> = ({ data }) => {
   return (
     <Stack spacing={2}>
       {data?.MRData.SeasonTable.Seasons?.map(({ season, url }) => (
@@ -30,4 +30,4 @@ const SeasonItems: React.FC<{ data: GetSeasonsResponse }> = ({ data }) => {
   );
 };
 
-export default SeasonItems;
+export default SeasonList;
