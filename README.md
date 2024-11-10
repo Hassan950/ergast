@@ -15,7 +15,7 @@ This project is a React application that uses TypeScript, Vite, Redux, and React
 1. **Clone the repository:**
 
    ```sh
-   git clone https://github.com/your-username/ergast.git
+   git clone https://github.com/Hassan950/ergast.git
    cd ergast
    ```
 
